@@ -2,5 +2,6 @@
 
 ## Démarrer le projet
 
+Installer l'extension Live server sur VSC et la démarrer
 Rien à installer ici, il suffit d'ouvrir le fichier `index.html`.
 
