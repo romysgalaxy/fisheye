@@ -16,11 +16,41 @@
             photographersSection.appendChild(photographerCard);
         });
     }
+
+// display media photographer
+    async function photographerMedias(medias, user) {
+        const mediasSection = document.querySelector(".photograph-media");
+        medias.forEach((media) => {
+            const mediaModel = mediaFactory(media, user);
+            const mediaCard = mediaModel.createMediaCard();
+            mediasSection.appendChild(mediaCard);
+        });
+    }
+
+    // lightbox
+
+    function displayLightBox() {
+        const lightBox = lightBox()
+        const section = document.querySelector(".lightBox")
+        section.appendChild(lightBox);
+    }
+
+
     async function init() {
         const id = getIdUrl(); 
         const { photographers } = await getPhotographers();
+        const { medias } = await getMedias();
+
         const filteredPhotographers = photographers.filter((photographer) => photographer.id === id);
+        const filteredMedias = medias.filter((media) => media.photographerId === id);
+          
+        const user = filteredPhotographers[0].name
+        console.log(filteredMedias)  
+
         photographerDetails(filteredPhotographers);
+        photographerMedias(filteredMedias, user);
+        displayLightBox()
+
     };
     
     init()

@@ -1,31 +1,32 @@
 function photographerFactory(data) {
     //const { name } = data
     const portrait = data.portrait
-    const picture = `assets/photographers/${portrait}`; 
+    const picture = `assets/photographers/${portrait}`
+    const name = data.name
 
     function handleLinkClick(event) {
         event.preventDefault(); // Empêche le comportement par défaut du lien
       
-        const photographerId = data.id;
-        const photographerUrl = `photographer.html?id=${photographerId}`;
+        const photographerId = data.id
+        const photographerUrl = `photographer.html?id=${photographerId}`
       
         // Redirige l'utilisateur vers la page photographer.html
-        window.location.href = photographerUrl;
+        window.location.href = photographerUrl
     }
 
     function createPhotographerCard() {
         // article
-        const article = document.createElement( 'article' );
+        const article = document.createElement( 'article' )
         article.setAttribute("aria-label", "Voir le profil du photographe")
         
         // id
-        const id = document.createElement( 'a' );
+        const id = document.createElement( 'a' )
         id.textContent = " VOIR"
         id.setAttribute("href", "photographer.html?id=" + data.id);
-        id.addEventListener("click", handleLinkClick);
+        id.addEventListener("click", handleLinkClick)
 
         // img
-        const img = document.createElement( 'img' );
+        const img = document.createElement( 'img' )
         img.setAttribute("src", picture)
         img.setAttribute("alt", "Photographe " + data.name)
         img.setAttribute("class", "photographerProfil")
@@ -66,7 +67,7 @@ function photographerFactory(data) {
         const divImg = document.querySelector('.photograph-header .img')
         
         // img
-        const img = document.createElement( 'img' );
+        const img = document.createElement( 'img' ) 
         img.setAttribute("src", picture)
         img.setAttribute("alt", "Photographe " + data.name)
         img.setAttribute("class", "photographer-img")

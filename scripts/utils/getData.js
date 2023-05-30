@@ -15,3 +15,7 @@ async function getMedias() {
     console.log('get medias', data.medias)
     return data
 }
+
+async function getPhotographerv2() {
+    
+}
