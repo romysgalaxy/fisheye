@@ -1,98 +1,128 @@
-function photographerFactory(data) {
-    //const { name } = data
-    const portrait = data.portrait
-    const picture = `assets/photographers/${portrait}`
-    const name = data.name
-
-    function handleLinkClick(event) {
-        event.preventDefault(); // Empêche le comportement par défaut du lien
-      
-        const photographerId = data.id
-        const photographerUrl = `photographer.html?id=${photographerId}`
-      
-        // Redirige l'utilisateur vers la page photographer.html
-        window.location.href = photographerUrl
+class PhotographerFactory {
+    constructor(data) {
+      this.data = data;
+      this.portrait = data.portrait;
+      this.picture = `assets/photographers/${this.portrait}`;
+      this.photographerId = data.id;
     }
-
-    function createPhotographerCard() {
-        // article
-        const article = document.createElement( 'article' )
-        article.setAttribute("aria-label", "Voir le profil du photographe")
+  
+    handleLinkClick(event) {
+      event.preventDefault();
+      const photographerUrl = `photographer.html?id=${this.photographerId}`;
+      window.location.href = photographerUrl;
+    }
+  
+    createPhotographerCard() {
         
-        // id
-        const id = document.createElement( 'a' )
-        id.textContent = " VOIR"
-        id.setAttribute("href", "photographer.html?id=" + data.id);
-        id.addEventListener("click", handleLinkClick)
-
-        // img
-        const img = document.createElement( 'img' )
-        img.setAttribute("src", picture)
-        img.setAttribute("alt", "Photographe " + data.name)
-        img.setAttribute("class", "photographerProfil")
-
-        // name
-        const h2 = document.createElement( 'h2' )
-        h2.setAttribute("class", "name")
-        h2.textContent = data.name
-
-        // location
-        const location = document.createElement( 'p' )
-        location.setAttribute("class", "location")
-        location.textContent = data.city + ", " + data.country
-
-        // tagline
-        const tagline = document.createElement( 'p' )
-        tagline.setAttribute("class", "tagline")
-        tagline.textContent = data.tagline
-
-        // price
-        const price = document.createElement( 'p' )
-        price.setAttribute("class", "price")
-        price.textContent = data.price + "€/jour"
-
-        article.appendChild(id)
-        article.appendChild(img)
-        article.appendChild(h2)
-        article.appendChild(location)
-        article.appendChild(tagline)
-        article.appendChild(price)
-
-        return (article)
+      const article = document.createElement('article');
+      article.setAttribute('aria-label', 'Voir le profil du photographe');
+  
+      const id = document.createElement('a');
+      id.textContent = ' VOIR';
+      id.setAttribute('href', `photographer.html?id=${this.photographerId}`);
+      id.addEventListener('click', this.handleLinkClick.bind(this));
+  
+      const img = document.createElement('img');
+      img.setAttribute('src', this.picture);
+      img.setAttribute('alt', `Photographe ${this.data.name}`);
+      img.setAttribute('class', 'photographerProfil');
+  
+      const h2 = document.createElement('h2');
+      h2.setAttribute('class', 'name');
+      h2.textContent = this.data.name;
+  
+      const location = document.createElement('p');
+      location.setAttribute('class', 'location');
+      location.textContent = `${this.data.city}, ${this.data.country}`;
+  
+      const tagline = document.createElement('p');
+      tagline.setAttribute('class', 'tagline');
+      tagline.textContent = this.data.tagline;
+  
+      const price = document.createElement('p');
+      price.setAttribute('class', 'price');
+      price.textContent = `${this.data.price}€/jour`;
+  
+      article.appendChild(id);
+      article.appendChild(img);
+      article.appendChild(h2);
+      article.appendChild(location);
+      article.appendChild(tagline);
+      article.appendChild(price);
+  
+      return article;
+    }
+  
+    createPhotographerHeader() {
+      const headerDiv = document.createElement('div');
+      headerDiv.setAttribute('class', 'photograph-header card');
+  
+      const imgDiv = document.createElement('div');
+      imgDiv.setAttribute('class', 'photograph-header img');
+      headerDiv.appendChild(imgDiv);
+  
+      const btnDiv = document.createElement('div');
+      btnDiv.setAttribute('class', 'photograph-header btn');
+      headerDiv.appendChild(btnDiv);
+  
+      const contentDiv = document.createElement('div');
+      contentDiv.setAttribute('class', 'photograph-header content');
+      headerDiv.appendChild(contentDiv);
+  
+      const img = document.createElement('img');
+      img.setAttribute('src', this.picture);
+      img.setAttribute('alt', `Photographe ${this.data.name}`);
+      img.setAttribute('class', 'photographer-img');
+      imgDiv.appendChild(img);
+  
+      const contactButton = document.createElement('button');
+      contactButton.setAttribute('class', 'contact_button');
+      contactButton.textContent = 'Contactez-moi';
+      contactButton.addEventListener('click', this.displayModal);
+      btnDiv.appendChild(contactButton);
+  
+      const name = document.createElement('h2');
+      name.setAttribute('class', 'name');
+      name.textContent = this.data.name;
+      contentDiv.appendChild(name);
+  
+      const location = document.createElement('p');
+      location.setAttribute('class', 'location');
+      location.textContent = `${this.data.city}, ${this.data.country}`;
+      contentDiv.appendChild(location);
+  
+      const tagline = document.createElement('p');
+      tagline.setAttribute('class', 'tagline');
+      tagline.textContent = this.data.tagline;
+      contentDiv.appendChild(tagline);
+  
+      return headerDiv;
     }
 
-    function createPhotographerHeader() {
-        //div
-        const divInfo = document.querySelector('.photograph-header .content')
-        const divImg = document.querySelector('.photograph-header .img')
-        
-        // img
-        const img = document.createElement( 'img' ) 
-        img.setAttribute("src", picture)
-        img.setAttribute("alt", "Photographe " + data.name)
-        img.setAttribute("class", "photographer-img")
-
-        // name
-        const h2 = document.createElement( 'h2' )
-        h2.setAttribute("class", "name")
-        h2.textContent = data.name
-
-        // location
-        const location = document.createElement( 'p' )
-        location.setAttribute("class", "location")
-        location.textContent = data.city + ", " + data.country
-
-        // tagline
-        const tagline = document.createElement( 'p' )
-        tagline.setAttribute("class", "tagline")
-        tagline.textContent = data.tagline
-
-        divImg.appendChild(img)
-        divInfo.appendChild(h2)
-        divInfo.appendChild(location)
-        divInfo.appendChild(tagline)
-
-        return (div)
+    getIdUrl() {
+      var str = window.location.href;
+      var url = new URL(str);
+      var id = url.searchParams.get("id");
+      var parsedId = parseInt(id, 10);
+      return parsedId;
     }
-    return { name, data, picture, createPhotographerCard, createPhotographerHeader }
-}
+
+    renderPhotographerCard(datas) {
+        const photographersSection = document.querySelector(".photographer_section");
+        datas.forEach((data) => {
+          const photographer = new PhotographerFactory(data);
+          const userCardDOM = photographer.createPhotographerCard();
+          photographersSection.appendChild(userCardDOM);
+        });
+    }
+
+    renderPhotographerDetails(datas) {
+      const photographersSection = document.querySelector(".photograph-header");
+      datas.forEach((data) => {
+          const photographerModel = new PhotographerFactory(data);
+          const photographerCard = photographerModel.createPhotographerHeader();
+          photographersSection.appendChild(photographerCard);
+      });
+  }
+
+  }

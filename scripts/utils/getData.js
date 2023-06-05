@@ -1,21 +1,7 @@
-// get the photographers datas
+// fetch the datas json
 
-async function getPhotographers() {
-
+async function getDatas() {
     const response = await fetch('/../../data/photographers.json')
     let data = await response.json()
     return data
-}
-
-// get the medias datas
-async function getMedias() {
-
-    const response = await fetch('/../../data/photographers.json')
-    let data = await response.json()
-    console.log('get medias', data.medias)
-    return data
-}
-
-async function getPhotographerv2() {
-    
 }

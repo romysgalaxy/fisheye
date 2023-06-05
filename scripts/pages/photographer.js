@@ -1,56 +1,22 @@
-// get the photographer id in the url and convert it in integer
-    function getIdUrl() {
-        var str = window.location.href;
-        var url = new URL(str);
-        var id = url.searchParams.get("id");
-        var parsedId = parseInt(id, 10);
-        return parsedId;
-      }
-
-// display header photographer
-    async function photographerDetails(photographers) {
-        const photographersSection = document.querySelector(".photograph-header .content");
-        photographers.forEach((photographer) => {
-            const photographerModel = photographerFactory(photographer);
-            const photographerCard = photographerModel.createPhotographerHeader();
-            photographersSection.appendChild(photographerCard);
-        });
-    }
-
-// display media photographer
-    async function photographerMedias(medias, user) {
-        const mediasSection = document.querySelector(".photograph-media");
-        medias.forEach((media) => {
-            const mediaModel = mediaFactory(media, user);
-            const mediaCard = mediaModel.createMediaCard();
-            mediasSection.appendChild(mediaCard);
-        });
-    }
-
-    // lightbox
-
-    function displayLightBox() {
-        const lightBox = lightBox()
-        const section = document.querySelector(".lightBox")
-        section.appendChild(lightBox);
-    }
-
-
     async function init() {
-        const id = getIdUrl(); 
-        const { photographers } = await getPhotographers();
-        const { medias } = await getMedias();
+        const { photographers } = await getDatas();
+        const { medias } = await getDatas();
 
+        const photographerFactory = new PhotographerFactory(photographers)
+        const mediaFactory = new MediaFactory(medias)
+        const id = photographerFactory.getIdUrl(); 
+        
         const filteredPhotographers = photographers.filter((photographer) => photographer.id === id);
         const filteredMedias = medias.filter((media) => media.photographerId === id);
           
         const user = filteredPhotographers[0].name
-        console.log(filteredMedias)  
+        const price = filteredPhotographers[0].price
+        // const hearts = filteredMedias[0].likes
 
-        photographerDetails(filteredPhotographers);
-        photographerMedias(filteredMedias, user);
-        displayLightBox()
-
+        photographerFactory.renderPhotographerDetails(filteredPhotographers);
+        mediaFactory.renderPhotographerMedias(filteredMedias, user)
+        mediaFactory.renderPhotographerFooter(filteredMedias, user, price)
+        mediaFactory.renderPhotographerFilter(filteredMedias, user, price)
     };
     
     init()
