@@ -8,6 +8,8 @@ class MediaFactory {
     this.play = `assets/medias/${user}/${data.video}`;
     this.likes = data.likes;
     this.liked = false;
+    //this.image = image;
+    //this.id = id
   }
 
   dispalyContent() {
@@ -52,11 +54,14 @@ class MediaFactory {
     if (this.data.image) {
       const img = document.createElement("img");
       img.setAttribute("src", this.picture);
+      img.setAttribute("class", 'media-img');
+      img.addEventListener('click', this.carouselMedia)
       div.appendChild(img);
     } else if (this.data.video) {
       const video = document.createElement("video");
       video.setAttribute("src", this.play);
       video.setAttribute("controls", true);
+      video.setAttribute("class", 'media-img');
       div.appendChild(video);
     }
 
@@ -65,6 +70,42 @@ class MediaFactory {
     return div;
   }
 
+  carouselMedia = () => {
+        const carousel = document.createElement('div')
+        carousel.setAttribute('class', 'lightBox-container')
+
+        const img = document.createElement('img')
+        img.setAttribute("src", this.picture)
+
+        const previous = document.createElement('button')
+        const previousIcon = document.createElement('img')
+        previousIcon.setAttribute("src", "./assets/icons/arrow_left.svg")
+        previous.appendChild(previousIcon)
+
+        const next = document.createElement('button')
+        const nextIcon = document.createElement('img')
+        nextIcon.setAttribute("src", "./assets/icons/arrow_right.svg")
+        next.appendChild(nextIcon)
+        
+        const close = document.createElement('button')
+        close.setAttribute("class", "close-btn")
+        const closeIcon = document.createElement('img')
+        closeIcon.setAttribute("src", "./assets/icons/close-red.svg")
+        close.appendChild(closeIcon)
+
+        carousel.appendChild(previous)
+        carousel.appendChild(img)
+        carousel.appendChild(next)
+        carousel.appendChild(close)
+        const lightBoxSection = document.querySelector('.lightBox');
+        lightBoxSection.appendChild(carousel);
+  }
+
+  renderCarouselMedia(medias, user, price) {
+    const model = new MediaFactory(medias, user, price);
+    model.carouselMedia(); // Ajouter les écouteurs d'événement aux médias
+  }
+  
   filtredMedias() {
     const div = document.createElement("div");
     div.setAttribute("class", "photograph-filter-content");

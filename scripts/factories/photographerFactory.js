@@ -78,7 +78,10 @@ class PhotographerFactory {
       const contactButton = document.createElement('button');
       contactButton.setAttribute('class', 'contact_button');
       contactButton.textContent = 'Contactez-moi';
-      contactButton.addEventListener('click', this.displayModal);
+      const formFactory = new FormFactory
+      contactButton.addEventListener('click', function () {
+        formFactory.displayModal()
+      });
       btnDiv.appendChild(contactButton);
   
       const name = document.createElement('h2');

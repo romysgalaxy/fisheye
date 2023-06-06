@@ -2,10 +2,13 @@
 <html>
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <title>Fisheye - photographe </title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <title>Fisheye - photographe</title>
   </head>
   <body>
     <div id="layout">
@@ -32,20 +35,37 @@
     </div>
     <!-- form -->
     <div id="contact_modal">
-			<div class="modal">
-				<header>
+      <div class="modal">
+        <div class="modal-header">
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
-        </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
+          <img src="assets/icons/close.svg" class="modal-close"/>
+        </div>
+        <div class="modal-name">
+          <h2 class="photographer-name">
+            <!-- photographer name -->
+          </h2>
+        </div>
+        <form>
+          <label for="first">Prénom</label>
+          <input type="text" id="first" name="first"/>
+          <div id="firstError" class="errorMessage"></div>
+
+          <label for="last">Nom</label>
+          <input type="text" id="last" name="last"/>
+          <div id="lastError" class="errorMessage"></div>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email"/>
+          <div id="emailError" class="errorMessage"></div>
+
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message"></textarea>
+          <div id="messageError" class="errorMessage"></div>
+
           <button class="contact_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
+        </form>
+      </div>
+    </div>
     <script src="scripts/utils/getData.js"></script>
     <script src="scripts/factories/photographerFactory.js"></script>
     <script src="scripts/factories/mediaFactory.js"></script>
