@@ -18,7 +18,7 @@ class PhotographerFactory {
       article.setAttribute('aria-label', 'Voir le profil du photographe');
   
       const id = document.createElement('a');
-      id.textContent = ' VOIR';
+      //id.textContent = ' VOIR';
       id.setAttribute('href', `photographer.html?id=${this.photographerId}`);
       id.addEventListener('click', this.handleLinkClick.bind(this));
   
@@ -44,11 +44,11 @@ class PhotographerFactory {
       price.textContent = `${this.data.price}€/jour`;
   
       article.appendChild(id);
-      article.appendChild(img);
-      article.appendChild(h2);
-      article.appendChild(location);
-      article.appendChild(tagline);
-      article.appendChild(price);
+      id.appendChild(img);
+      id.appendChild(h2);
+      id.appendChild(location);
+      id.appendChild(tagline);
+      id.appendChild(price);
   
       return article;
     }

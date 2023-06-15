@@ -8,7 +8,9 @@
         const id = photographerFactory.getIdUrl(); 
         
         const filteredPhotographers = photographers.filter((photographer) => photographer.id === id);
-        const filteredMedias = medias.filter((media) => media.photographerId === id);
+        const filteredMedias = medias
+            .filter((media) => media.photographerId === id)
+            .sort((a, b) => b.likes - a.likes)
           
         const user = filteredPhotographers[0].name
         const price = filteredPhotographers[0].price
@@ -16,13 +18,12 @@
         const formFactory = new FormFactory(user)
 
         photographerFactory.renderPhotographerDetails(filteredPhotographers);
-        mediaFactory.renderPhotographerMedias(filteredMedias, user)
+        mediaFactory.renderPhotographerMedias(filteredMedias, user, price)
         mediaFactory.renderPhotographerFooter(filteredMedias, user, price)
         mediaFactory.renderPhotographerFilter(filteredMedias, user, price)
         formFactory.displayName(user)
         formFactory.closeModal()
         formFactory.formSubmit()
-        //mediaFactory.renderCarouselMedia(filteredMedias, user, price)
     };
     
     init()

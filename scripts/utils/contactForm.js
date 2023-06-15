@@ -26,7 +26,6 @@ class FormFactory {
     }
 
     formSubmit() {
-        console.log('verification')
         const form = document.querySelector('form');
         const firstName = document.getElementById('first');
         const firstNameError = document.getElementById('firstError');
@@ -95,6 +94,8 @@ class FormFactory {
                 modal.style.display = "none"
                 layout.style.display = "block"
                 console.log('formulaire valide')
+                const div = document.getElementById('photograph-validation')
+                div.textContent = "Votre formulaire a bien été envoyé"
             } else {
                 console.log('formulaire invalide')
             }

@@ -76,12 +76,17 @@
 }
 /* filter */
 
+.photograph-filter {
+    margin: 0 20px;
+    display: flex;
+}
+
 .photograph-filter-content {
     display: flex;
     align-items: center;
 }
 
-.photograph-filter-content p{
+.photograph-filter-content p {
    font-size: 18px;
    font-weight: 700;
 }
@@ -198,27 +203,35 @@
 }
 
 /* carousel */
+
 .lightBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
+    height: 90vh;
 }
 .lightBox-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     position: relative
 }
 
-.lightBox-container img {
-    width: 100%;
-    max-width: 600px;
-    /* height: 600px; */
+.lightBox-container #carousel {
     object-fit: cover;
+    height: 50%;
+    width: 70%;
+    max-width: 1050px;
+    max-height: 900px;
+    position: relative;
 }
 
 .lightBox-container button {
-    height: 50px;
+    /* height: 50px; */
+    width: 50px;
     border: none;
     background: none;
 }
@@ -227,6 +240,29 @@
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.lightBox-title {
+    /* position: absolute;
+    left: 20px; */
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    color: #901C1C;
+}
+
+@media only screen and (min-width: 768px) {
+    .lightBox-container #carousel {
+        height: 70%;
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 1040px) {
+    .lightBox-container #carousel {
+        height: 850px;
+        width: 1000px;
+    }
 }
   
 /* modal */
@@ -257,7 +293,6 @@
     font-size: 35px;
     font-weight: 400;
     margin: 0;
-    /* text-align: center; */
 }
 
 form {
