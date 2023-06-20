@@ -18,8 +18,8 @@ class PhotographerFactory {
       article.setAttribute('aria-label', 'Voir le profil du photographe');
   
       const id = document.createElement('a');
-      //id.textContent = ' VOIR';
       id.setAttribute('href', `photographer.html?id=${this.photographerId}`);
+      id.setAttribute('title', `${this.data.name}`);
       id.addEventListener('click', this.handleLinkClick.bind(this));
   
       const img = document.createElement('img');
@@ -27,7 +27,7 @@ class PhotographerFactory {
       img.setAttribute('alt', `Photographe ${this.data.name}`);
       img.setAttribute('class', 'photographerProfil');
   
-      const h2 = document.createElement('h2');
+      const h2 = document.createElement('h2');     
       h2.setAttribute('class', 'name');
       h2.textContent = this.data.name;
   
@@ -46,9 +46,9 @@ class PhotographerFactory {
       article.appendChild(id);
       id.appendChild(img);
       id.appendChild(h2);
-      id.appendChild(location);
-      id.appendChild(tagline);
-      id.appendChild(price);
+      article.appendChild(location);
+      article.appendChild(tagline);
+      article.appendChild(price);
   
       return article;
     }
@@ -71,12 +71,13 @@ class PhotographerFactory {
   
       const img = document.createElement('img');
       img.setAttribute('src', this.picture);
-      img.setAttribute('alt', `Photographe ${this.data.name}`);
+      img.setAttribute('alt', `${this.data.name}`);
       img.setAttribute('class', 'photographer-img');
       imgDiv.appendChild(img);
   
       const contactButton = document.createElement('button');
       contactButton.setAttribute('class', 'contact_button');
+      contactButton.setAttribute('title', 'Contact Me');
       contactButton.textContent = 'Contactez-moi';
       const formFactory = new FormFactory
       contactButton.addEventListener('click', function () {
@@ -84,7 +85,7 @@ class PhotographerFactory {
       });
       btnDiv.appendChild(contactButton);
   
-      const name = document.createElement('h2');
+      const name = document.createElement('h1');
       name.setAttribute('class', 'name');
       name.textContent = this.data.name;
       contentDiv.appendChild(name);

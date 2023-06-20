@@ -1,5 +1,5 @@
 class MediaFactory {
-  constructor(data, user, price, filter ) {
+  constructor(data, user, price, filter) {
     this.data = data;
     this.user = user;
     this.price = price;
@@ -7,9 +7,13 @@ class MediaFactory {
     //this.hearts = hearts;
     this.picture = `assets/medias/${user}/${data.image}`;
     this.play = `assets/medias/${user}/${data.video}`;
-    this.likes = data.likes;
     this.liked = false;
+    this.likes = data.likes;
+    this.totalLikes = 0; // Initialisation de totalLikes à 0
+    console.log('totalLikes construct', this.totalLikes)
     this.handlePreviousMediaClick = this.showPreviousMedia.bind(this);
+    //this.updateLike = this.updateLike.bind(this); 
+  
   }
 
   dispalyContent() {
@@ -30,12 +34,16 @@ class MediaFactory {
     const heart = document.createElement("img");
     heart.setAttribute("src", "./assets/icons/heart.svg");
     heart.setAttribute("class", "heart");
+    heart.setAttribute("alt", "likes");
 
     heart.addEventListener("click", () => {
       if (!this.liked) {
         this.likes++;
         like.textContent = this.likes;
         this.liked = true;
+        this.totalLikes++
+        console.log('totalLikes listener', this.totalLikes)
+        this.renderPhotographerFooter()
       }
     });
 
@@ -55,15 +63,16 @@ class MediaFactory {
       const img = document.createElement("img");
       img.setAttribute("src", this.picture);
       img.setAttribute("class", 'media-img');
+      img.setAttribute("alt", `${this.data.title}, closeup view`);
       img.addEventListener('click', this.carouselMedia);
       div.appendChild(img);
     } else if (this.data.video) {
       const video = document.createElement("video");
       video.setAttribute("src", this.play);
       video.setAttribute("class", 'media-img');
+      video.setAttribute("alt", `${this.data.title}, closeup view`);
       video.addEventListener('click', this.carouselMedia);
-      div.appendChild(video);
-      
+      div.appendChild(video); 
     }
 
     div.appendChild(this.dispalyContent());
@@ -76,19 +85,22 @@ class MediaFactory {
         const none = document.querySelectorAll('header, .photograph-header, .photograph-filter, .photograph-media, .photograph-footer')
         none.forEach(element => element.style.display = 'none')
 
-        const carousel = document.createElement('div')
+        const carousel = document.createElement('dialog')
         carousel.setAttribute('class', 'lightBox-container')
+        carousel.setAttribute('aria-label', 'image closeup view')
         const lightBoxSection = document.querySelector('.lightBox');
 
-        const previous = document.createElement('button')
+        const previous = document.createElement('a')
         previous.setAttribute('class', 'btn-previous')
+        previous.setAttribute('aria-label', 'Previous image')
         const previousIcon = document.createElement('img')
         previousIcon.setAttribute("src", "./assets/icons/arrow_left.svg")
         previous.appendChild(previousIcon)
         previous.addEventListener('click', this.showPreviousMedia.bind(this))
 
-        const next = document.createElement('button')
+        const next = document.createElement('a')
         next.setAttribute('class', 'btn-next')
+        next.setAttribute('aria-label', 'Next image')
         const nextIcon = document.createElement('img')
         nextIcon.setAttribute("src", "./assets/icons/arrow_right.svg")
         next.appendChild(nextIcon)
@@ -96,6 +108,7 @@ class MediaFactory {
 
         const close = document.createElement('button')
         close.setAttribute("class", "close-btn")
+        close.setAttribute("aria-label", "Close dialog")
         const closeIcon = document.createElement('img')
         closeIcon.setAttribute("src", "./assets/icons/close-red.svg")
         close.appendChild(closeIcon)
@@ -118,6 +131,7 @@ class MediaFactory {
         if (this.data.image) {
           const img = document.createElement('img');
           img.setAttribute('src', this.picture);
+          img.setAttribute('alt', this.data.title);
           img.setAttribute('id', 'carousel');
           carousel.appendChild(img);
           carousel.insertBefore(img, next)
@@ -125,6 +139,7 @@ class MediaFactory {
           console.log('ici')
           const video = document.createElement('video');
           video.setAttribute('src', this.play);
+          video.setAttribute('alt', this.data.title);
           video.setAttribute('controls', true);
           video.setAttribute('id', 'carousel');
           carousel.appendChild(video);
@@ -230,13 +245,16 @@ class MediaFactory {
     const div = document.createElement("div");
     div.setAttribute("class", "photograph-filter-content");
 
-    const text = document.createElement("p");
+    const text = document.createElement("label");
+    text.setAttribute('for', 'filter')
     text.textContent = "Trier par";
 
     const dropdown = document.createElement("select");
+    dropdown.setAttribute('id', 'filter')
     dropdown.addEventListener("change", this.handleFilterChange.bind(this));
 
     const option1 = document.createElement("option");
+    //option1.setAttribute('aria-selected', 'true' )
     option1.textContent = "Popularité";
     option1.value = "likes";
     dropdown.appendChild(option1);
@@ -347,13 +365,35 @@ class MediaFactory {
   }
 
   renderPhotographerFooter(medias, user, price) {
+    console.log('renderPhotographerFooter')
+    
+    //const totalLikes = medias.reduce((total, media) => total + media.likes, 0);
     let totalLikes = 0;
+    // const heart = document.querySelector('.heart')
+    // heart.addEventListener("click", () => {
+    //   if (!this.liked) {
+    //     //this.likes++;
+    //     totalLikes ++
+    //     //like.textContent = this.likes;
+    //     this.liked = true;
+    //     //this.renderPhotographerFooter()
+    //   }
+    // });
     medias.forEach((media) => {
         totalLikes += media.likes
     })
+    
+    console.log('likes', totalLikes)
     const section = document.querySelector('.photograph-footer')
     const model = new MediaFactory({}, user, price, totalLikes);
     const footer = model.createPhotographerFooter()
+    //footer.querySelector('.photographer-like p').textContent = totalLikes; // Met à jour le texte avec totalLikes
+    const likeCount = footer.querySelector('.photographer-like p');
+    // updateLike() {
+    //   console.log("Update like method");
+    //   totalLikes ++;
+    // }
+    likeCount.textContent = totalLikes;
     section.appendChild(footer)
 }
 renderPhotographerFilter(medias, user, price) {
